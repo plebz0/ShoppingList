@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ShoppingList.Views.ShoppingListView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid Padding="12" RowSpacing="12"
+          RowDefinitions="Auto,*">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="12">
+
+            <!-- ADD ITEM -->
+            <HorizontalStackLayout Spacing="8" HorizontalOptions="Fill">
+
+                <Entry
+                    x:Name="newItemName"
+                    Placeholder="new Item"
+                    WidthRequest="200" />
+
+                <VerticalStackLayout Spacing="2" VerticalOptions="Center" HorizontalOptions="Start">
+                    <Label Text="Qty:" FontSize="12" HorizontalOptions="Center" />
+                    <Entry x:Name="QuantityEntry" WidthRequest="80" Keyboard="Numeric" Text="1"
+                           TextChanged="OnQuantityEntryTextChanged"
+                           Completed="OnQuantityEntryCompleted" />
+                    <Stepper x:Name="QuantityStepper"
+                             Minimum="0" Maximum="1000" Increment="1" Value="1"
+                             ValueChanged="OnQuantityStepperValueChanged" />
+                </VerticalStackLayout>
+
+                <Picker
+                    x:Name="UnitPicker"
+                    Title="Unit"
+                    WidthRequest="80"
+                    VerticalOptions="Center" />
+
+                <!-- SELECTED CATEGORIES -->
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="Categories:" VerticalOptions="Center" />
+                    <Label x:Name="SelectedCategoriesLabel"
+                           VerticalOptions="Center"
+                           Text="(none)" />     
+                    <Button Text="Edit"
+                            Clicked="OnSelectCategoriesClicked" />
+                </HorizontalStackLayout>
+
+                <!-- SELECTED STORES -->
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="Stores:" VerticalOptions="Center" />
+                    <Label x:Name="SelectedStoresLabel"
+                           VerticalOptions="Center"
+                           Text="(none)" />
+                    <Button Text="Edit"
+                            Clicked="OnSelectStoresClicked" />
+                </HorizontalStackLayout>
+
+
+                <Button
+                    Text="+ Add item"
+                    Clicked="OnAddItemClicked"
+                    HorizontalOptions="End" />
+            </HorizontalStackLayout>
+
+            <!-- FILTERS -->
+            <HorizontalStackLayout Spacing="8" VerticalOptions="Start">
+
+                <!-- CATEGORY FILTER -->
+                <VerticalStackLayout VerticalOptions="Start">
+                    <Button Text="Filter by categories ▼"
+                            Clicked="OnToggleCategoryFilterClicked" />
+
+                    <VerticalStackLayout
+                        x:Name="CategoryFilterPanel"
+                        IsVisible="False"
+                        Padding="8,4,8,4"
+                        Spacing="4">
+
+                        <CollectionView ItemsSource="{Binding CategoryFilters}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Spacing="8">
+                                        <CheckBox IsChecked="{Binding IsSelected}"
+                                                  CheckedChanged="OnCategoryFilterChanged" />
+                                        <Label Text="{Binding Name}" />
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- STORE FILTER -->
+                <VerticalStackLayout VerticalOptions="Start">
+                    <Button Text="Filter by stores ▼"
+                            Clicked="OnToggleStoreFilterClicked" />
+
+                    <VerticalStackLayout
+                        x:Name="StoreFilterPanel"
+                        IsVisible="False"
+                        Padding="8,4,8,4"
+                        Spacing="4">
+
+                        <CollectionView ItemsSource="{Binding StoreFilters}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Spacing="8">
+                                        <CheckBox IsChecked="{Binding IsSelected}"
+                                                  CheckedChanged="OnStoreFilterChanged" />
+                                        <Label Text="{Binding Name}" />
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- GROUPING -->
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Start">
+                    <Label Text="Group by:" VerticalOptions="Center" />
+                    <Picker
+                        x:Name="GroupingPicker"
+                        WidthRequest="180"
+                        SelectedIndexChanged="OnGroupingChanged"
+                        SelectedIndex="0">
+                        <Picker.Items>
+                            <x:String>None</x:String>
+                            <x:String>Category</x:String>
+                            <x:String>Store</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </HorizontalStackLayout>
+
+                <!-- SORTING -->
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Start">
+                    <Label Text="Sort:" VerticalOptions="Center"/>
+                    <Picker x:Name="SortPicker" WidthRequest="160" SelectedIndexChanged="OnSortChanged">
+                        <Picker.Items>
+                            <x:String>Name A → Z</x:String>
+                            <x:String>Name Z → A</x:String>
+                            <x:String>Quantity Low → High</x:String>
+                            <x:String>Quantity High → Low</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </HorizontalStackLayout>
+
+                <!-- SHOW PURCHASED -->
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Start">
+                    <CheckBox x:Name="ShowPurchasedCheckBox"
+                              IsChecked="True"
+                              CheckedChanged="OnShowPurchasedChanged" />
+                    <Label Text="Show purchased" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout x:Name="CategoriesContainer" Spacing="6" Padding="0" />
+        </ScrollView>
+
+    </Grid>
+
+</ContentPage>

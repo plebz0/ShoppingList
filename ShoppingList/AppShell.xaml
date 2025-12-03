@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ShoppingList.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:ShoppingList.Views">
+
+    <TabBar>
+        <Tab Title="Shopping" >
+            <ShellContent
+                Route="shopping"
+                Title="Shopping"
+                ContentTemplate="{DataTemplate pages:ShoppingListView}" />
+        </Tab>
+
+        <Tab Title="Recipes">
+            <ShellContent
+                Route="recipes"
+                Title="Recipes"
+                ContentTemplate="{DataTemplate pages:RecipesView}" />
+        </Tab>
+
+        <Tab Title="Settings">
+            <ShellContent
+                Route="settings"
+                Title="Settings"
+                ContentTemplate="{DataTemplate pages:SettingsView}" />
+        </Tab>
+    </TabBar>
+
+</Shell>

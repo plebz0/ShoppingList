@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ShoppingList.Views.SettingsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:ShoppingList.Views"
+    xmlns:contentviews="clr-namespace:ShoppingList.ContentViews">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="16" Spacing="24">
+
+            <HorizontalStackLayout Padding="12" Spacing="12">
+                <Button 
+                    Text="Export items to file"
+                    Clicked="OnExportClicked"/>
+                <Button 
+                    Text="Import items from file"
+                    Clicked="OnImportClicked"/>
+
+                <HorizontalStackLayout Spacing="12">
+                    <CheckBox x:Name="ReplaceImportCheckBox" />
+                    <Label Text="Replace current items instead of adding" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+            </HorizontalStackLayout>
+
+            <!-- CATEGORIES -->
+            <VerticalStackLayout Spacing="8">
+                <Label
+                    Text="Categories"
+                    FontAttributes="Bold"
+                    FontSize="20" />
+
+                <HorizontalStackLayout Spacing="8">
+                    <Entry
+                        x:Name="CategoryEntry"
+                        Placeholder="Add new category" />
+                    <Button
+                        Text="Add"
+                        Clicked="OnAddCategoryClicked" />
+                </HorizontalStackLayout>
+
+                <CollectionView ItemsSource="{Binding CategoryItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <contentviews:SettingContentView
+                                BindingContext="{Binding .}"
+                                NameChanged="OnCategoryNameChanged"
+                                 />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+
+            <!-- STORES -->
+            <VerticalStackLayout Spacing="8">
+                <Label
+                    Text="Stores"
+                    FontAttributes="Bold"
+                    FontSize="20" />
+
+                <HorizontalStackLayout Spacing="8">
+                    <Entry
+                        x:Name="StoreEntry"
+                        Placeholder="Add new store" />
+                    <Button
+                        Text="Add"
+                        Clicked="OnAddStoreClicked" />
+                </HorizontalStackLayout>
+
+                <CollectionView ItemsSource="{Binding StoreItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <contentviews:SettingContentView
+                                BindingContext="{Binding .}"
+                                NameChanged="OnStoreNameChanged"
+                                 />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

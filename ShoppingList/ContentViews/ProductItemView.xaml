@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="ShoppingList.ContentViews.ProductItemView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Frame
+        Padding="10"
+        Margin="6,4"
+        CornerRadius="8"
+        HasShadow="True">
+        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto">
+            <!-- Bought -->
+            <CheckBox
+                Grid.Column="0"
+                VerticalOptions="Center"
+                IsChecked="{Binding Item.IsBought, Mode=TwoWay}" />
+
+            <!-- Main info -->
+            <VerticalStackLayout Grid.Column="1" Spacing="6" Padding="8,0">
+                <Entry
+                    x:Name="NameEntry"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="FillAndExpand"
+                    Completed="OnNameEntryCompleted"
+                    TextChanged="OnNameEntryTextChanged" />
+
+
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                    <Button Text="−" WidthRequest="36" Clicked="OnDecreaseClicked" />
+                    <Entry x:Name="QtyEntry" WidthRequest="70" Keyboard="Numeric" Completed="OnQtyEntryCompleted" HorizontalOptions="Start" />
+                    <Button Text="+" WidthRequest="36" Clicked="OnIncreaseClicked" />
+
+                    <Picker x:Name="UnitPicker" WidthRequest="90" HorizontalOptions="Start" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label Text="Cat:" FontAttributes="Italic" FontSize="12" VerticalOptions="Center" />
+                    <Label x:Name="PrimaryCategoryLabel" FontSize="12" VerticalOptions="Center" />
+                    <Button Text="Edit" Clicked="OnEditCategoriesClicked" FontSize="12" />
+
+                    <Label Text="Store:" FontAttributes="Italic" FontSize="12" VerticalOptions="Center" />
+                    <Label x:Name="PrimaryStoreLabel" FontSize="12" VerticalOptions="Center" />
+                    <Button Text="Edit" Clicked="OnEditStoresClicked" FontSize="12" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Delete -->
+            <Button
+                Grid.Column="2"
+                Text="✕"
+                TextColor="White"
+                BackgroundColor="#d9534f"
+                WidthRequest="40"
+                HeightRequest="40"
+                VerticalOptions="Center"
+                Clicked="OnDeleteClicked" />
+        </Grid>
+    </Frame>
+</ContentView>
