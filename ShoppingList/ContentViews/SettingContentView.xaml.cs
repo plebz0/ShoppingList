@@ -2,12 +2,10 @@ namespace ShoppingList.ContentViews
 {
     public partial class SettingContentView : ContentView
     {
-        private string _currentValue = string.Empty;
+        private string currentValue = string.Empty;
 
-        // event: nazwa zmieniona (old, new)
         public event EventHandler<(string OldValue, string NewValue)>? NameChanged;
 
-        // event: klikni�to delete
         public event EventHandler<string>? DeleteClicked;
 
         public SettingContentView()
@@ -17,7 +15,7 @@ namespace ShoppingList.ContentViews
 
         public SettingContentView(string name) : this()
         {
-            _currentValue = name;
+            currentValue = name;
             NameEntry.Text = name;
         }
 
@@ -25,24 +23,24 @@ namespace ShoppingList.ContentViews
         {
             base.OnBindingContextChanged();
 
-            _currentValue = BindingContext?.ToString() ?? string.Empty;
-            NameEntry.Text = _currentValue;
+            currentValue = BindingContext?.ToString() ?? string.Empty;
+            NameEntry.Text = currentValue;
         }
 
         private void OnNameTextChanged(object sender, TextChangedEventArgs e)
         {
             var newValue = e.NewTextValue?.Trim() ?? string.Empty;
 
-            if (newValue == _currentValue) return;
+            if (newValue == currentValue) return;
 
-            NameChanged?.Invoke(this, (_currentValue, newValue));
-            _currentValue = newValue;
+            NameChanged?.Invoke(this, (currentValue, newValue));
+            currentValue = newValue;
         }
 
         private void OnDeleteClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(_currentValue)) return;
-            DeleteClicked?.Invoke(this, _currentValue);
+            if (string.IsNullOrEmpty(currentValue)) return;
+            DeleteClicked?.Invoke(this, currentValue);
         }
     }
 }

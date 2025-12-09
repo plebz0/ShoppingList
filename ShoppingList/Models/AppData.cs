@@ -16,7 +16,7 @@ namespace ShoppingList.Models
 
         public static void Save()
         {
-            // saves Items and config to file (XML)
+          
             try
             {
                 var dir = FileSystem.AppDataDirectory;
@@ -48,7 +48,7 @@ namespace ShoppingList.Models
             }
             catch (Exception)
             {
-                // ignore or log according to your logging strategy
+                Console.WriteLine("Error saving app data.");
             }
         }
 
@@ -67,7 +67,7 @@ namespace ShoppingList.Models
                     using var stream = File.OpenRead(path);
                     if (serializer.Deserialize(stream) is PersistedData data)
                     {
-                        // Load config
+                       
                         Config.Categories.Clear();
                         if (data.Config?.Categories != null)
                         {
@@ -82,7 +82,7 @@ namespace ShoppingList.Models
                                 Config.Stores.Add(s);
                         }
 
-                        // Load items
+                     
                         Items.Clear();
                         if (data.Items != null)
                         {
@@ -105,7 +105,7 @@ namespace ShoppingList.Models
                 }
                 catch (Exception)
                 {
-                    // ignore or log; fallback to sample data below
+                    
                     loadedFromFile = false;
                 }
             }
@@ -113,7 +113,7 @@ namespace ShoppingList.Models
             if (loadedFromFile)
                 return;
 
-            // Fallback: sample data (kept from original seed)
+           
             Config.Categories.Clear();
             Config.Categories.Add("Dairy");
             Config.Categories.Add("Vegetables");
@@ -176,7 +176,7 @@ namespace ShoppingList.Models
             });
         }
 
-        // Helper DTOs for XML serialization
+        
         [XmlRoot("AppData")]
         public class PersistedData
         {

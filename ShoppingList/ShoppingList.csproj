@@ -63,6 +63,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="ContentViews\CategoryContentView.xaml.cs">
+	    <DependentUpon>CategoryContentView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\SettingsView.xaml.cs">
 	    <DependentUpon>SettingsView.xaml</DependentUpon>
 	  </Compile>
@@ -72,7 +75,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="ContentViews\CathegoryContentView.xaml">
+	  <MauiXaml Update="ContentViews\CategoryContentView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ContentViews\MultiSelectPage.xaml">

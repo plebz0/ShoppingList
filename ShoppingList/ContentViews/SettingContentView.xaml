@@ -11,22 +11,13 @@
 
         <HorizontalStackLayout Spacing="8">
 
-            <!-- editable name -->
+
             <Entry
                 x:Name="NameEntry"
                 Text="{Binding .}"
                 TextChanged="OnNameTextChanged"
                 WidthRequest="180"
                 VerticalOptions="Center" />
-
-            <!-- delete --><!--
-            <Button
-                Text="X"
-                TextColor="Red"
-                FontSize="12"
-                VerticalOptions="Center"
-                Clicked="OnDeleteClicked" />-->
-
         </HorizontalStackLayout>
     </Frame>
 </ContentView>

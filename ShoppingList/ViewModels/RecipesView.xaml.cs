@@ -4,6 +4,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Xml.Serialization;
+using System.Linq;
+using System.IO;
+using System.Collections.Generic;
 
 namespace ShoppingList.Views
 {
@@ -18,9 +21,7 @@ namespace ShoppingList.Views
             BindingContext = this;
         }
 
-        // ======================================
-        // ADD TO SHOPPING LIST
-        // ======================================
+
         private void OnImportRecipeClicked(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.BindingContext is Recipe recipe)
@@ -42,9 +43,7 @@ namespace ShoppingList.Views
             }
         }
 
-        // ======================================
-        // NEW INGREDIENTS
-        // ======================================
+
         private void OnAddIngredientClicked(object sender, EventArgs e)
         {
             var name = NewIngName.Text?.Trim();
@@ -84,7 +83,7 @@ namespace ShoppingList.Views
             if (string.IsNullOrWhiteSpace(recipeName))
                 return;
 
-            var recipe = new Recipe { Name = recipeName };
+            var recipe = new Recipe { Name = recipeName, Description = NewRecipeDescription.Text };
 
             foreach (var i in NewIngredients)
             {
@@ -95,18 +94,17 @@ namespace ShoppingList.Views
                     Quantity = i.Quantity,
                     Categories = new ObservableCollection<string>(i.Categories ?? new ObservableCollection<string>()),
                     Stores = new ObservableCollection<string>(i.Stores ?? new ObservableCollection<string>())
+
                 });
             }
 
             RecipesStore.Recipes.Add(recipe);
 
             NewRecipeName.Text = string.Empty;
+            NewRecipeDescription.Text = string.Empty;
             NewIngredients.Clear();
         }
 
-        // ======================================
-        // EXPORT RECIPE → XML (AppDataDirectory)
-        // ======================================
         private async void OnExportRecipeClicked(object sender, EventArgs e)
         {
             try
@@ -117,6 +115,7 @@ namespace ShoppingList.Views
                 var data = new PersistedRecipe
                 {
                     Name = recipe.Name,
+                    Description = recipe.Description,
                     Ingredients = recipe.Ingredients.Select(i => new AppData.PersistedItem
                     {
                         Name = i.Name,
@@ -130,7 +129,7 @@ namespace ShoppingList.Views
 
                 var serializer = new XmlSerializer(typeof(PersistedRecipe));
 
-                string fileName = $"{recipe.Name}_recipe_{DateTime.Now:yyyyMMdd_HHmmss}.xml";
+                string fileName = $"{SanitizeFileName(recipe.Name)}_recipe_{DateTime.Now:yyyyMMdd_HHmmss}.xml";
                 string folder = FileSystem.AppDataDirectory;
                 string fullPath = Path.Combine(folder, fileName);
 
@@ -147,9 +146,13 @@ namespace ShoppingList.Views
             }
         }
 
-        // ======================================
-        // IMPORT RECIPE FILE → FilePicker
-        // ======================================
+        private static string SanitizeFileName(string name)
+        {
+            foreach (var c in Path.GetInvalidFileNameChars())
+                name = name.Replace(c, '_');
+            return name;
+        }
+
         private static readonly FilePickerFileType XmlFileType = new(
             new Dictionary<DevicePlatform, IEnumerable<string>>
             {
@@ -187,7 +190,8 @@ namespace ShoppingList.Views
 
                 var recipe = new Recipe
                 {
-                    Name = imported.Name ?? "Unnamed Recipe"
+                    Name = imported.Name ?? "Unnamed Recipe",
+                    Description = imported.Description ?? ""
                 };
 
                 foreach (var it in imported.Ingredients ?? new List<AppData.PersistedItem>())
@@ -214,12 +218,12 @@ namespace ShoppingList.Views
         }
     }
 
-    // ======================================
-    // SERIALIZATION MODEL FOR RECIPES
-    // ======================================
+   
     public class PersistedRecipe
     {
         public string? Name { get; set; }
+
+        public string? Description { get; set; }
 
         [XmlArray("Ingredients"), XmlArrayItem("Item")]
         public List<AppData.PersistedItem>? Ingredients { get; set; }

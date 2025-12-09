@@ -6,29 +6,29 @@ namespace ShoppingList.Models
 {
     public class ItemEntity : INotifyPropertyChanged
     {
-        private string _name;
-        private double _quantity;
-        private string _unit;
+        private string name;
+        private double quantity;
+        private string unit;
         private bool _isBought;
-        private ObservableCollection<string> _categories;
-        private ObservableCollection<string> _stores;
+        private ObservableCollection<string> categories;
+        private ObservableCollection<string> stores;
 
         public string Name
         {
-            get => _name;
-            set { if (_name != value) { _name = value; OnPropertyChanged(); } }
+            get => name;
+            set { if (name != value) { name = value; OnPropertyChanged(); } }
         }
 
         public double Quantity
         {
-            get => _quantity;
-            set { if (_quantity != value) { _quantity = value; OnPropertyChanged(); } }
+            get => quantity;
+            set { if (quantity != value) { quantity = value; OnPropertyChanged(); } }
         }
 
         public string Unit
         {
-            get => _unit;
-            set { if (_unit != value) { _unit = value; OnPropertyChanged(); } }
+            get => unit;
+            set { if (unit != value) { unit = value; OnPropertyChanged(); } }
         }
 
         public bool IsBought
@@ -39,14 +39,14 @@ namespace ShoppingList.Models
 
         public ObservableCollection<string> Categories
         {
-            get => _categories;
-            set { if (_categories != value) { _categories = value; OnPropertyChanged(); } }
+            get => categories;
+            set { if (categories != value) { categories = value; OnPropertyChanged(); } }
         }
 
         public ObservableCollection<string> Stores
         {
-            get => _stores;
-            set { if (_stores != value) { _stores = value; OnPropertyChanged(); } }
+            get => stores;
+            set { if (stores != value) { stores = value; OnPropertyChanged(); } }
         }
 
         public string PrimaryCategory => Categories?.FirstOrDefault() ?? "";

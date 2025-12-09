@@ -3,78 +3,85 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingList.Views.RecipesView"
              Title="Recipes">
-    <VerticalStackLayout Padding="12" Spacing="12">
 
-        <Label Text="Recipes" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" />
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="12">
 
-        <CollectionView ItemsSource="{Binding Recipes}" SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="8" Margin="4" BorderColor="#245373">
-                        <VerticalStackLayout>
-                            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Spacing="6">
-                                <Entry Text="{Binding Name}" FontAttributes="Bold" HorizontalOptions="StartAndExpand" />
+            <Label Text="Recipes" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" />
 
-                                <Button Text="Export"
-                                    FontSize="12"
-                                    Clicked="OnExportRecipeClicked" />
+            <CollectionView ItemsSource="{Binding Recipes}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="8" Margin="4" BorderColor="#245373">
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout HorizontalOptions="FillAndExpand" Spacing="6">
+                                    <Entry Text="{Binding Name}" FontAttributes="Bold" HorizontalOptions="StartAndExpand" />
 
-                                <Button Text="Add To Shopping List"
-                                    FontSize="12"
-                                    Clicked="OnImportRecipeClicked" />
-                            </HorizontalStackLayout>
+                                    <Button Text="Export"
+                                        FontSize="12"
+                                        Clicked="OnExportRecipeClicked" />
 
+                                    <Button Text="Add To Shopping List"
+                                        FontSize="12"
+                                        Clicked="OnImportRecipeClicked" />
+                                </HorizontalStackLayout>
 
-                            <CollectionView ItemsSource="{Binding Ingredients}" HeightRequest="120" SelectionMode="None">
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid ColumnDefinitions="*,Auto,Auto" Padding="4">
-                                            <Label Text="{Binding Name}" Grid.Column="0" />
-                                            <Label Text="{Binding Quantity}" Grid.Column="1" />
-                                            <Label Text="{Binding Unit}" Grid.Column="2" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                <Label Text="{Binding Description}"
+                                       FontAttributes="Italic"
+                                       LineBreakMode="WordWrap"
+                                       Margin="0,6,0,6" />
 
-        <Button Text="Import Recipe From File"
-            Margin="0,10,0,0"
-            Clicked="OnImportRecipeFileClicked" />
+                                <CollectionView ItemsSource="{Binding Ingredients}" HeightRequest="120" SelectionMode="None">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="*,Auto,Auto" Padding="4">
+                                                <Label Text="{Binding Name}" Grid.Column="0" />
+                                                <Label Text="{Binding Quantity}" Grid.Column="1" />
+                                                <Label Text="{Binding Unit}" Grid.Column="2" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
+            <Button Text="Import Recipe From File"
+                Margin="0,10,0,0"
+                Clicked="OnImportRecipeFileClicked" />
 
-        <Frame Padding="8" Margin="4" BorderColor="#3279a8">
-            <VerticalStackLayout>
-                <Label Text="Add new recipe" FontAttributes="Bold" />
-                <Entry x:Name="NewRecipeName" Placeholder="Recipe name" />
+            <Frame Padding="8" Margin="4" BorderColor="#3279a8">
+                <VerticalStackLayout>
+                    <Label Text="Add new recipe" FontAttributes="Bold" />
+                    <Entry x:Name="NewRecipeName" Placeholder="Recipe name" />
+                    <Entry x:Name="NewRecipeDescription" Placeholder="Description (optional)" />
 
-                <HorizontalStackLayout Spacing="8">
-                    <Entry x:Name="NewIngName" Placeholder="Ingredient name" HorizontalOptions="FillAndExpand" />
-                    <Entry x:Name="NewIngQty" Placeholder="Qty" WidthRequest="80" Keyboard="Numeric" />
-                    <Entry x:Name="NewIngUnit" Placeholder="Unit" WidthRequest="80" />
-                    <Button Text="Add ingredient" Clicked="OnAddIngredientClicked" />
-                </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="8">
+                        <Entry x:Name="NewIngName" Placeholder="Ingredient name" HorizontalOptions="FillAndExpand" />
+                        <Entry x:Name="NewIngQty" Placeholder="Qty" WidthRequest="80" Keyboard="Numeric" />
+                        <Entry x:Name="NewIngUnit" Placeholder="Unit" WidthRequest="80" />
+                        <Button Text="Add ingredient" Clicked="OnAddIngredientClicked" />
+                    </HorizontalStackLayout>
 
-                <CollectionView ItemsSource="{Binding NewIngredients}" HeightRequest="120" SelectionMode="None">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="*,Auto,Auto,Auto" Padding="4">
-                                <Label Text="{Binding Name}" Grid.Column="0" />
-                                <Label Text="{Binding Quantity}" Grid.Column="1" />
-                                <Label Text="{Binding Unit}" Grid.Column="2" />
-                                <Button Text="X" TextColor="Red" Grid.Column="3" Clicked="OnRemoveNewIngredientClicked" />
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                    <CollectionView ItemsSource="{Binding NewIngredients}" HeightRequest="120" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,Auto,Auto,Auto" Padding="4">
+                                    <Label Text="{Binding Name}" Grid.Column="0" />
+                                    <Label Text="{Binding Quantity}" Grid.Column="1" />
+                                    <Label Text="{Binding Unit}" Grid.Column="2" />
+                                    <Button Text="X" TextColor="Red" Grid.Column="3" Clicked="OnRemoveNewIngredientClicked" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
-                <Button Text="Save recipe" Clicked="OnSaveRecipeClicked" />
-            </VerticalStackLayout>
-        </Frame>
+                    <Button Text="Save recipe" Clicked="OnSaveRecipeClicked" />
+                </VerticalStackLayout>
+            </Frame>
 
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

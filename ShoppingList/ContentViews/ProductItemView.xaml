@@ -10,13 +10,11 @@
         CornerRadius="8"
         HasShadow="True">
         <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto">
-            <!-- Bought -->
             <CheckBox
                 Grid.Column="0"
                 VerticalOptions="Center"
                 IsChecked="{Binding Item.IsBought, Mode=TwoWay}" />
 
-            <!-- Main info -->
             <VerticalStackLayout Grid.Column="1" Spacing="6" Padding="8,0">
                 <Entry
                     x:Name="NameEntry"
@@ -46,7 +44,6 @@
                 </HorizontalStackLayout>
             </VerticalStackLayout>
 
-            <!-- Delete -->
             <Button
                 Grid.Column="2"
                 Text="✕"

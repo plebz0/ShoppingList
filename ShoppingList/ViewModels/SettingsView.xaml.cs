@@ -85,7 +85,7 @@ public partial class SettingsView : ContentPage
     {
         var (oldName, newName) = args;
         if (string.IsNullOrWhiteSpace(newName) || oldName == newName) return;
-        if (CategoryItems.Contains(newName)) return; // unikamy duplikat�w
+        if (CategoryItems.Contains(newName)) return; 
 
         var idx = CategoryItems.IndexOf(oldName);
         if (idx >= 0)
@@ -109,7 +109,7 @@ public partial class SettingsView : ContentPage
     {
         var (oldName, newName) = args;
         if (string.IsNullOrWhiteSpace(newName) || oldName == newName) return;
-        if (StoreItems.Contains(newName)) return; // unikamy duplikat�w
+        if (StoreItems.Contains(newName)) return;
 
         var idx = StoreItems.IndexOf(oldName);
         if (idx >= 0)
@@ -128,14 +128,12 @@ public partial class SettingsView : ContentPage
 
         }
     }
-    // -----------------------------
-    // EXPORT
-    // -----------------------------
+
     private async void OnExportClicked(object sender, EventArgs e)
     {
         try
         {
-            // przygotuj dane do eksportu (TAK SAMO jak Save)
+    
             var data = new AppData.PersistedData
             {
                 Config = new AppData.PersistedConfig
@@ -173,9 +171,6 @@ public partial class SettingsView : ContentPage
         }
     }
 
-    // -----------------------------
-    // IMPORT
-    // -----------------------------
 
     private static readonly FilePickerFileType XmlFileType = new(new Dictionary<DevicePlatform, IEnumerable<string>>
     {
@@ -231,7 +226,7 @@ public partial class SettingsView : ContentPage
                 });
             }
 
-            // Zastępujemy również kategorie/stores z configu?
+ 
             if (replace)
             {
                 AppData.Config.Categories.Clear();

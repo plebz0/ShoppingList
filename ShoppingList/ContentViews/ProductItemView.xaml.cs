@@ -122,6 +122,7 @@ namespace ShoppingList.ContentViews
 
         private void OnDeleteClicked(object sender, EventArgs e)
         {
+          
             if (Item == null) return;
             AppData.Items.Remove(Item);
             AppData.Save();
